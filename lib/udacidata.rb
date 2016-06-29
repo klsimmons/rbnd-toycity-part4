@@ -30,5 +30,10 @@ class Udacidata
     num == 0 ? @product_array.first : @product_array.first(num)
   end
 
+  def self.last(num=0)
+    self.all
+    num == 0 ? @product_array.last : @product_array.last(num)
+  end
+
 
 end
