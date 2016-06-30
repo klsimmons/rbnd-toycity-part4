@@ -35,5 +35,19 @@ class Udacidata
     num == 0 ? @product_array.last : @product_array.last(num)
   end
 
+  def self.find(id)
+    self.all
+    @product_array[id - 1]
+  end
+
+  def self.destroy(id)
+    deleted = nil
+    table = CSV.table(@@data_path)
+    table.delete_if { |row| deleted = Product.new(row) if row[:id] == id }
+    File.open(@@data_path, 'w')  { |f| f.write(table.to_csv) }
+    return deleted
+  end
+
+
 
 end
