@@ -3,10 +3,10 @@ require_relative 'errors'
 require 'csv'
 
 class Udacidata
-
+  create_finder_methods :name, :brand
   @@data_path = File.dirname(__FILE__) + "/../data/data.csv"
 
-  def self.create(attributes = {})
+  def self.create(attributes = nil)
     item = Product.new(attributes)
     CSV.open(@@data_path, "a+") do |csv|
       if csv.include?(item.id) == false
@@ -18,9 +18,8 @@ class Udacidata
 
   def self.all
     @product_array = []
-    CSV.read(@@data_path, headers: true).each do |row|
-      product = new({id: row['id'], brand: row['brand'], name: row['name'], price: row['price']})
-      @product_array << product
+    CSV.foreach(@@data_path, headers: true) do |row|
+      @product_array << new(id: row['id'], brand: row['brand'], name: row['product'], price: row['price'])
     end
     return @product_array
   end
@@ -50,4 +49,17 @@ class Udacidata
 
 
 
+=begin
+  def self.find_by_brand(brand)
+    self.all
+    index = @product_array.index { |product| product.brand == brand }
+    @product_array[index]
+  end
+
+  def self.find_by_name(name)
+    self.all
+    index = @product_array.index { |product| product.name == name }
+    @product_array[index]
+  end
+=end
 end
