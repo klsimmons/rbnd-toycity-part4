@@ -49,8 +49,16 @@ class Udacidata
 
   def self.where(options = {})
     products = self.all
-    products.keep_if { |product| product.brand == options[:brand] || product.name == options[:name]}
+    products.keep_if { |product| product.brand == options[:brand] || product.name == options[:name] }
     return products
+  end
+
+  def update(options = {})
+    @brand = options[:brand]
+    @price = options[:price]
+    @name  = options[:name]
+    Product.destroy(@id)
+    Product.create(id: @id, brand: @brand, price: @price, name: @name)
   end
 
 end
