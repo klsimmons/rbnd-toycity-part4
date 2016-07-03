@@ -47,19 +47,10 @@ class Udacidata
     return deleted
   end
 
-
-
-=begin
-  def self.find_by_brand(brand)
-    self.all
-    index = @product_array.index { |product| product.brand == brand }
-    @product_array[index]
+  def self.where(options = {})
+    products = self.all
+    products.keep_if { |product| product.brand == options[:brand] || product.name == options[:name]}
+    return products
   end
 
-  def self.find_by_name(name)
-    self.all
-    index = @product_array.index { |product| product.name == name }
-    @product_array[index]
-  end
-=end
 end
