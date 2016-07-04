@@ -9,21 +9,31 @@ module Analyzable
   end
 
   def print_report(products)
-    # TODO put avg price, counts by brand, counts by product name
-    return "#{average_price(products)}"
+    report = "Average Price: #{average_price(products)}\n"
+    report << format_count("brand", count_by_brand(products))
+    report << format_count("name", count_by_name(products))
   end
 
   def count_by_brand(products)
-    brand_hash = {}
-    count = 0
-    products.each { |product| brand_hash[product.brand] = (count + 1) }
-    return brand_hash
+    counter_method(products, 'brand')
   end
 
   def count_by_name(products)
-    name_hash = {}
+    counter_method(products, 'name')
+  end
+
+  def format_count(metric, hash)
+    title = "Inventory by #{metric.capitalize}:\n"
+    body = hash.reduce("") { |my_string, (key, value)| my_string + "- #{key}: #{value}\n" }
+    return title + body
+  end
+
+  private
+
+  def counter_method(products, metric)
+    metric_hash = {}
     count = 0
-    products.each { |product| name_hash[product.name] = (count + 1) }
-    return name_hash
+    products.each { |product| metric_hash[product.send(metric)] = (count+1) }
+    return metric_hash
   end
 end
