@@ -22,12 +22,6 @@ module Analyzable
     counter_method(products, 'name')
   end
 
-  def format_count(metric, hash)
-    title = "Inventory by #{metric.capitalize}:\n"
-    body = hash.reduce("") { |my_string, (key, value)| my_string + "- #{key}: #{value}\n" }
-    return title + body
-  end
-
   private
 
   def counter_method(products, metric)
@@ -35,5 +29,11 @@ module Analyzable
     count = 0
     products.each { |product| metric_hash[product.send(metric)] = (count+1) }
     return metric_hash
+  end
+
+  def format_count(metric, hash)
+    title = "Inventory by #{metric.capitalize}:\n"
+    body = hash.reduce("") { |my_string, (key, value)| my_string + "- #{key}: #{value}\n" }
+    return title + body
   end
 end
