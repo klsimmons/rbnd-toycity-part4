@@ -19,4 +19,11 @@ module Analyzable
     products.each { |product| brand_hash[product.brand] = (count + 1) }
     return brand_hash
   end
+
+  def count_by_name(products)
+    name_hash = {}
+    count = 0
+    products.each { |product| name_hash[product.name] = (count + 1) }
+    return name_hash
+  end
 end
