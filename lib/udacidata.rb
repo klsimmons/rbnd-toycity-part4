@@ -36,13 +36,20 @@ class Udacidata
 
   def self.find(id)
     self.all
+    if id > @product_array.length || @product_array[id - 1] == nil
+      raise UdacitaskErrors::ProductNotFoundError
+    end
     @product_array[id - 1]
   end
 
   def self.destroy(id)
     deleted = nil
     table = CSV.table(@@data_path)
-    table.delete_if { |row| deleted = Product.new(row) if row[:id] == id }
+    raise UdacitaskErrors::ProductNotFoundError if table[:id] == "" || id > table.length
+
+    table.delete_if do |row|
+      deleted = Product.new(row) if row[:id] == id
+    end
     File.open(@@data_path, 'w')  { |f| f.write(table.to_csv) }
     return deleted
   end

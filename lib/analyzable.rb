@@ -33,7 +33,10 @@ module Analyzable
 
   def format_count(metric, hash)
     title = "Inventory by #{metric.capitalize}:\n"
-    body = hash.reduce("") { |my_string, (key, value)| my_string + "- #{key}: #{value}\n" }
+    body = hash.reduce("") do |my_string, (key, value)|
+      key == "No #{metric}" if key == ""
+      my_string + "- #{key}: #{value}\n"
+    end
     return title + body
   end
 end
