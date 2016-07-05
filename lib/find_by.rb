@@ -7,7 +7,6 @@ class Module
           products.find { |product| product.#{attribute} == value }
         end
       }
-
       self.class_eval(finder_method)
     end
   end

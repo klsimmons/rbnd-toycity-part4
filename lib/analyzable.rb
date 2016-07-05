@@ -25,9 +25,8 @@ module Analyzable
   private
 
   def counter_method(products, metric)
-    metric_hash = {}
-    count = 0
-    products.each { |product| metric_hash[product.send(metric)] = (count+1) }
+    metric_hash = Hash.new(0)
+    products.each { |product| metric_hash[product.send(metric)] += 1}
     return metric_hash
   end
 

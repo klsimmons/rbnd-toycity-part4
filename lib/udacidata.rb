@@ -3,7 +3,8 @@ require_relative 'errors'
 require 'csv'
 
 class Udacidata
-  create_finder_methods :name, :brand
+  create_finder_methods :name, :brand, :id
+  singleton_class.send :alias_method, :find, :find_by_id
   @@data_path = File.dirname(__FILE__) + "/../data/data.csv"
 
   def self.create(attributes = nil)
@@ -33,15 +34,13 @@ class Udacidata
     self.all
     num == 0 ? @product_array.last : @product_array.last(num)
   end
-
+=begin
   def self.find(id)
-    self.all
-    if id > @product_array.length || @product_array[id - 1] == nil
-      raise UdacitaskErrors::ProductNotFoundError
-    end
-    @product_array[id - 1]
+    table = CSV.table(@@data_path)
+    raise UdacitaskErrors::ProductNotFoundError if table[:id] == "" || id > table.length
+    table[id - 1]
   end
-
+=end
   def self.destroy(id)
     deleted = nil
     table = CSV.table(@@data_path)
@@ -61,9 +60,9 @@ class Udacidata
   end
 
   def update(options = {})
-    @brand = options[:brand]
-    @price = options[:price]
-    @name  = options[:name]
+    @brand = options[:brand] || self.brand
+    @price = options[:price] || self.price
+    @name  = options[:name] || self.name
     Product.destroy(@id)
     Product.create(id: @id, brand: @brand, price: @price, name: @name)
   end
