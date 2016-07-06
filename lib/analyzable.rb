@@ -24,12 +24,15 @@ module Analyzable
 
   private
 
+  # Generic method for counting products by a given metric
+  # This does the actual workload for the public counting methods.
   def counter_method(products, metric)
     metric_hash = Hash.new(0)
     products.each { |product| metric_hash[product.send(metric)] += 1}
     return metric_hash
   end
 
+  # Formats the data output by the counting methods, for use in print_report
   def format_count(metric, hash)
     title = "Inventory by #{metric.capitalize}:\n"
     body = hash.reduce("") do |my_string, (key, value)|

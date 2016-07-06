@@ -3,6 +3,8 @@ require_relative 'errors'
 require 'csv'
 
 class Udacidata
+
+  # 'find' is being used as an alternate name for 'find_by_id' which is created in the find_by module
   create_finder_methods :name, :brand, :id
   singleton_class.send :alias_method, :find, :find_by_id
   @@data_path = File.dirname(__FILE__) + "/../data/data.csv"
