@@ -2,5 +2,4 @@
 module UdacitaskErrors
   class ProductNotFoundError < StandardError
   end
-
 end
