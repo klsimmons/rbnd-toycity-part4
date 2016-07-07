@@ -40,13 +40,13 @@ class Udacidata
   def self.destroy(id)
     deleted = nil
     table = CSV.table(@@data_path)
-    raise UdacitaskErrors::ProductNotFoundError if table[:id] == "" || id > table.length
 
     table.delete_if do |row|
       deleted = Product.new(row) if row[:id] == id
     end
+    raise UdacitaskErrors::ProductNotFoundError if deleted == nil
     File.open(@@data_path, 'w')  { |f| f.write(table.to_csv) }
-    return deleted
+    deleted
   end
 
   def self.where(options = {})

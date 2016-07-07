@@ -49,6 +49,7 @@ puts
 puts "-----------------------"
 puts "RETURN FIRST 2 PRODUCTS"
 puts "-----------------------"
+
 print Product.first(2)
 #
 puts
@@ -68,6 +69,7 @@ puts "-------------------------"
 puts "DESTROY PRODUCT WITH ID 2"
 puts "-------------------------"
 print Product.destroy(2)
+
 #
 puts
 puts "-------------------------------"
@@ -127,7 +129,7 @@ print Analyzable::average_price(Product.all)
 #
 puts
 puts "--------------------"
-puts "PRINT SUMMARY REPORT"
+puts "print SUMMARY REPORT"
 puts "--------------------"
 print Analyzable::print_report(Product.all)
 puts
